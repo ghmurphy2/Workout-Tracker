@@ -27,7 +27,7 @@ mongoose.connect(
   );
 
   app.use(routes);
-
+// get html for display
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'));
 });

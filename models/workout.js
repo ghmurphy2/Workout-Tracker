@@ -8,18 +8,18 @@ const workoutsSchema = new Schema({
         default: Date.now,
 
     },
-    exercises:[{
+    exercises: [{
         type: Schema.Types.ObjectId,
-        ref: 'exercises'
+        ref: 'Exercise'
     },
 ],
-    duration:{
+    totalDuration:{
         type: Number,
-        match: [/^[\d]$/, 'Please enter a valid number.'],
+        
     }
 });
 
 
-const Workouts = mongoose.model('workout', workoutsSchema)
+const Workouts = mongoose.model('workouts', workoutsSchema)
 
 module.exports = Workouts;

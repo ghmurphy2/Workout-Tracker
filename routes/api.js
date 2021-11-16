@@ -13,7 +13,7 @@ router
         res.status(200).json(created);
     } catch (err){
         res.status(500).json(err)
-        console.log(err)
+        // console.log(err)
     }
     })
 
@@ -26,16 +26,17 @@ router
         // by one
         .populate('exercises')
         let duration = 0;
-        lastWorkout.excercises.forEach((excer) =>{
-            duration += excer.duration;
+        lastWorkout.excercises.forEach((ex) =>{
+            duration += ex.duration;
         }
-        )
+        );
         lastWorkout.totalDuration = duration;
         res.status(200).json(lastWorkout);
     }
     catch (err){
 
         res.status(500).json(err)
+        console.log(err)
     }
 })
 
@@ -46,23 +47,25 @@ router.put('/workouts/:id', async (req,res) =>{
         const pushed = await Workouts.findOneAndUpdate(
             // be sure to _id
             { _id: req.params.id},
-            { $push:{exercises: Types.ObjectID(_id)}},
+            { $push:{exercises: Types.ObjectId(_id)}},
             {new:true}
             // console.log(exercises)
         )
         res.status(200).json(pushed);
     } catch(err){
         res.status(500).json(err)
+        console.log(err)
     }
 });
     // get all
 router.get('/workouts/range', async(req, res) =>{
     try{
-        const workoutsAll = await Workouts.find({}).populate('exercises')
-        res.status(200).json(workoutsAll)
+        const workoutsInRange = await Workouts.find({}).populate('exercises')
+        res.status(200).json(workoutsInRange)
     }
     catch (err){
         res.status(500).json(err)
+        
     }
     });
 

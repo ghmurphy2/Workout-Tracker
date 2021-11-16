@@ -1,6 +1,6 @@
 // combine and export
 
 module.exports = {
-    workouts: require('./workout'),
-    exercise: require('./excercises'),
+    Workouts: require('./workout'),
+    Exercise: require('./excercises'),
   };

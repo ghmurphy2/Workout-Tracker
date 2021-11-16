@@ -1,15 +1,15 @@
 // requires, get post rember error catch and sort
 const router = require('express').Router();
-const { workouts: workout, exercises } = require('../models');
+const { Workouts, Excercise } = require('../models');
 const { Types } = require('mongoose');
 const date = Date.now();
 
 router
-.route('/workout')
+.route('/workouts')
 // post route with error, pull execercise from workout
 .post(async (req, res) => {
     try{
-        const created = await workouts.create({date});
+        const created = await Workouts.create({date});
         res.status(200).json(created);
     } catch (err){
         res.status(500).json(err)
@@ -19,7 +19,7 @@ router
 
 .get(async (res,req) => {
     try{
-        const lastWorkout = await workouts.findOne()
+        const lastWorkout = await Workouts.findOne()
         .sort({ day: -1})
         // desencding order
         .limit(1)
@@ -30,7 +30,7 @@ router
             duration += excer.duration;
         }
         )
-        lastWorkout.duration = duration;
+        lastWorkout.totalDuration = duration;
         res.status(200).json(lastWorkout);
     }
     catch (err){
@@ -38,33 +38,35 @@ router
         res.status(500).json(err)
     }
 })
-    // get all
-router.get('/workout/range', async(req, res) =>{
+
+router.put('/workouts/:id', async (req,res) =>{
+
     try{
-        const workoutsAll = await workouts.find({}).populate('exercises')
+        const { _id } = await Excercise.create(req.body);
+        const pushed = await Workouts.findOneAndUpdate(
+            // be sure to _id
+            { _id: req.params.id},
+            { $push:{exercises: Types.ObjectID(_id)}},
+            {new:true}
+            // console.log(exercises)
+        )
+        res.status(200).json(pushed);
+    } catch(err){
+        res.status(500).json(err)
+    }
+});
+    // get all
+router.get('/workouts/range', async(req, res) =>{
+    try{
+        const workoutsAll = await Workouts.find({}).populate('exercises')
         res.status(200).json(workoutsAll)
     }
     catch (err){
         res.status(500).json(err)
     }
     });
-    module.exports = router
+
 // add new
 
-router.put('/workout/:id', async (req,res) =>{
 
-    try{
-        const {_id} = await excercises.create(req.body);
-        const pushed = await workouts.findOneAndUpdate(
-            // be sure to _id
-            { _id: req.params.id},
-            {$push:{exercises: Type.ObjectID(_id)}},
-            {new:true}
-            // console.log(exercises)
-        )
-        res.status(200).json(pushed);
-    }catch{
-        res.status(500).json(err)
-    }
-});
 module.exports = router;

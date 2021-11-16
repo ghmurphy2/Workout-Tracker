@@ -1,11 +1,11 @@
 // requires, get post rember error catch and sort
 const router = require('express').Router();
-const { workouts: workouts, exercises } = require('../models');
+const { workouts: workout, exercises } = require('../models');
 const { Types } = require('mongoose');
 const date = Date.now();
 
 router
-.route('/Workout')
+.route('/workout')
 // post route with error, pull execercise from workout
 .post(async (req, res) => {
     try{
@@ -39,9 +39,9 @@ router
     }
 })
     // get all
-router.get('/workouts/range', async(req, res) =>{
+router.get('/workout/range', async(req, res) =>{
     try{
-        const workoutsAll = await Workout.find({}).populate('exercises')
+        const workoutsAll = await workouts.find({}).populate('exercises')
         res.status(200).json(workoutsAll)
     }
     catch (err){
@@ -51,11 +51,11 @@ router.get('/workouts/range', async(req, res) =>{
     module.exports = router
 // add new
 
-router.put('/excerises/:id', async (req,res) =>{
+router.put('/workout/:id', async (req,res) =>{
 
     try{
         const {_id} = await excercises.create(req.body);
-        const pushed = await Workout.findOneAndUpdate(
+        const pushed = await workouts.findOneAndUpdate(
             // be sure to _id
             { _id: req.params.id},
             {$push:{exercises: Type.ObjectID(_id)}},

@@ -17,7 +17,7 @@ app.use(express.json());
 
 
 mongoose.connect(
-    process.env.MONGODB_URI || 'mongodb://localhost/deep-thoughts',
+    process.env.MONGODB_URI || 'mongodb://localhost/pacific-refuge-40772',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

@@ -26,3 +26,24 @@ router.get('/workouts/range', async(req, res) =>{
     }
     });
     module.exports = router
+// add new
+
+router.put('/workouts/:id', async (req,res) =>{
+
+    try{
+        const {_id} = await excercises.create(req.body);
+        const pushed = await workouts.findOneAndUpdate(
+            // be sure to _id
+            {_id: req.params.id},
+            {$push:{exercises: Type.Object(_id)}},
+            {new:true}
+            // console.log(exercises)
+        )
+        res.status(200).json(pushed);
+    }catch{
+        res.status(500).json(err)
+    }
+
+    
+})
+module.exports = router;

@@ -6,7 +6,7 @@ const date = Date.now();
 
 router
 .route('/workouts')
-// post route with error
+// post route with error, pull execercise from workout
 .post(async (req, res) => {
     try{
         const created = await workouts.create({date});
@@ -14,7 +14,7 @@ router
     } catch (err){
         res.status(500).json(err)
     }
-    })
+    });
     // get all
 router.get('/workouts/range', async(req, res) =>{
     try{
@@ -25,4 +25,4 @@ router.get('/workouts/range', async(req, res) =>{
         res.status(500).json(err)
     }
     });
-}
+    module.exports = router

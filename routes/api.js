@@ -9,7 +9,7 @@ router
 // post route with error, pull execercise from workout
 .post(async (req, res) => {
     try{
-        const created = await Workouts.create({date});
+        const created = await Workouts.create({ date });
         res.status(200).json(created);
     } catch (err){
         res.status(500).json(err)
@@ -47,13 +47,13 @@ router.put('/workouts/:id', async (req,res) =>{
         const pushed = await Workouts.findOneAndUpdate(
             // be sure to _id
             { _id: req.params.id},
-            { $push:{exercises: Types.ObjectId(_id)}},
-            {new:true}
+            { $push: {exercises: Types.ObjectId( _id )}},
+            {new: true}
             // console.log(exercises)
-        )
+        );
         res.status(200).json(pushed);
-    } catch(err){
-        res.status(500).json(err)
+    } catch (err){
+        res.status(404).json(err)
         console.log(err)
     }
 });

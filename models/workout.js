@@ -10,7 +10,7 @@ const workoutsSchema = new Schema({
     },
     exercises: [{
         type: Schema.Types.ObjectId,
-        ref: 'Exercise'
+        ref: 'exercises'
     },
 ],
     totalDuration:{

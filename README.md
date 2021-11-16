@@ -1,5 +1,4 @@
-# MAIN TITLE
-# SECONDARY TITLE
+# Workout Tracker
 ​
 
 ## General-Info

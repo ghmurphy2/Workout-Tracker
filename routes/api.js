@@ -14,7 +14,28 @@ router
     } catch (err){
         res.status(500).json(err)
     }
-    });
+    })
+.get(async (res,req) => {
+    try{
+        const lastWorkout = await workouts.findOne()
+        .sort({ day: -1})
+        // desencding order
+        .limit(1)
+        // by one
+        .populate('exercises')
+        let num = 0;
+        lastWorkout.excercises.forEach((excer) =>{
+            num += excer.num;
+        }
+        )
+        lastWorkout.duration = num;
+        res.status(200).json(lastWorkout);
+    }
+    catch (err){
+
+        res.status(500).json(err)
+    }
+})
     // get all
 router.get('/workouts/range', async(req, res) =>{
     try{
@@ -43,7 +64,5 @@ router.put('/workouts/:id', async (req,res) =>{
     }catch{
         res.status(500).json(err)
     }
-
-    
-})
+});
 module.exports = router;

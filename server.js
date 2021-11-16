@@ -14,10 +14,10 @@ app.use(log('dev'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(express.static('public'));
 
 mongoose.connect(
-    process.env.MONGODB_URI || 'mongodb://localhost/pacific-refuge-40772',
+    process.env.MONGODB_URI || 'mongodb://localhost/workout',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

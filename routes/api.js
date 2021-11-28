@@ -4,6 +4,16 @@ const {Workout} = require('../models');
 const date = Date.now();
 
 
+router.post("/api/workouts/", (req, res) => {
+  Workout.create(req.body).then((dbWorkout) => {
+  res.json(dbWorkout);
+
+}).catch(err =>{
+res.json(err);
+})
+});
+
+
 router.get('/workouts', (req, res) =>{
     Workout.aggregate([
         {
@@ -57,10 +67,6 @@ router.get('/workouts/range', (req, res) => {
         });
 } )
 
-router.post("/api/workouts/", (req, res) => {
-        Workout.create(req.body).then((dbWorkout) => {
-        res.json(dbWorkout);
-    });
-});
+
 
 module.exports = router;
